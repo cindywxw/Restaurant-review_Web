@@ -1,3 +1,16 @@
+Final project week 6:
+
+1. Wrote the models.yml file
+Classes: Restaurant, User, Administrator, Reservation, Review, Table, Openhour  
+2. Model validations
+3. Model associations: has_many, belongs_to
+4. Wrote the seeds.rb file, created data.
+
+
+
+
+
+
 # MPCS 52553 - Final Project Starting Point
 
 * Download the ZIP of this repository to start your project.  
