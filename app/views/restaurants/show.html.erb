@@ -1,0 +1,14 @@
+
+<!--  <% @rest = Restaurant.find_by(id: params["id"]) %> -->
+
+
+<p class="pull-right">
+  <%= link_to "Make a reservation", "/reservations?reservation_id=#{@rest.id}", mehod: 'post', class: 'button' %>
+</p>
+
+<p><strong>Name</strong> <%= @rest.name %></p>
+<p><strong>Address</strong>: <%= @rest.address %></p>
+
+<hr>
+
+

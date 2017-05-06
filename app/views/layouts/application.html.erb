@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Final</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <navbar>
+      <ul>
+        <li class="brand"><%= link_to "TinyTable", "/" %></li>
+        <li><%= link_to "Restaurants", "/restaurants" %></li>
+        <li><%= link_to "Reservations", "/reservations" %></li>
+<!--         <% if cookies["user_id"].present? %>
+          <li>Hi, <%= User.find_by(id: cookies["user_id"]).name %></li> -->
+        <% end %>
+
+        <div class="pull-right">
+          <li><%= link_to "Sign Up", "/users/new" %></li>
+          <li><%= link_to "Sign In", "/login" %></li>
+          <li><%= link_to "Sign Out", "/logout" %></li>
+        </div>
+      </ul>
+    </navbar>
+
+    <% if notice.present? %>
+      <p class="notice"> <%= notice %> </p>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>

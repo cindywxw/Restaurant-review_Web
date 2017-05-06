@@ -1,0 +1,29 @@
+<p><%= link_to "Add a Restaurant", "/restaurants/new", class: 'button' %></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Number of Tables</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @restaurants.each do |rest| %>
+
+        <tr>
+            <td><%= link_to "Toast", "/restaurants/#{rest.id}", method: 'delete' %>
+            <td><%= link_to "Edit", "/restaurants/#{rest.id}/edit" %>
+            <td>
+              <%= link_to "#{rest.name}", "/restaurants/#{rest.id}" %>
+            <td><%= rest.address %></td>
+            <td><%= rest.table_number %></td>
+
+        </tr>
+
+      <% end %>
+    </tbody>
+  </table>

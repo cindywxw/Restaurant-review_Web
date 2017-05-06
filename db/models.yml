@@ -1,0 +1,53 @@
+Restaurant
+  name: text
+  address: text  
+  table_number: integer
+
+Openhour
+  restaurant_id: integer
+  mon_open: text
+  mon_close: text
+  tues_open: text
+  tues_close: text
+  wed_open: text
+  wed_close: text
+  thr_open: text
+  thr_close: text
+  fri_open: text
+  fri_close: text
+  sat_open: text
+  sat_close: text
+  sun_open: text
+  sun_close: text
+
+
+Table
+  restaurant_id: integer
+  table_order: integer
+  capacity: integer
+
+User
+  name: text
+  password: text
+  points: integer
+  email_address: text
+
+
+Administrator
+  name: text
+  password: text
+
+
+Reservation
+  restaurant_id: integer
+  user_id: integer
+  reserve_at: datetime
+  dine_at: datetime
+  people: integer
+
+
+Review
+  restaurant_id: integer
+  user_id: integer
+  updated_at: datetime
+  content: text
