@@ -1,0 +1,14 @@
+Milestone #1 Grade - cindywxw
+
+Score: (10/10)
+
+Nice work!
+
+- Six models is a bit on the bigger side. To make the app the as simple as possible, I would see if there are any
+models/associations you can do without.
+
+- Unless a column is going to potentially have a lot of characters (e.g., a user's personal bio), you
+should use the `string` column, instead of `text`. I believe all of your `text` columns should be `string` instead.
+
+- Also, make sure to use upper case for your model names. e.g., `Openhour` should be `OpenHour`.
+Everywhere else, use underscores: `open_hours`
