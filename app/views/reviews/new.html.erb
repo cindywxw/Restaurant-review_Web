@@ -1,0 +1,21 @@
+<h3>Write a review</h3>
+
+<%= form_tag "/reviews" do %>
+
+  <p>
+    <%= label_tag "Content" %>
+    <%#= text_field_tag "content", @review.content %>
+    <textarea class="form-control" rows="3" name ="content"><%= @review.content %></textarea>
+  </p>
+
+
+  <p>
+      <%= submit_tag "Save Changes", class: 'btn btn-success' %>
+
+      or
+
+      <%= link_to "Cancel", "/reviews/#{@review.id}" %>
+  </p>
+
+
+<% end %>

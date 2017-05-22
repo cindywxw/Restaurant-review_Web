@@ -1,13 +1,30 @@
 
 <!--  <% @rest = Restaurant.find_by(id: params["id"]) %> -->
 
+<% session["rest_id"] = @rest.id %>
 
+<br></br>
 <p class="pull-right">
-  <%= link_to "Make a reservation", "/reservations?reservation_id=#{@rest.id}", mehod: 'post', class: 'button' %>
+  <%= link_to "Make a reservation", "/reservations/new?restaurant_id=#{@rest.id}", class: 'btn btn-default' %>
+  <%= link_to "Write a review", "/reviews/new?restaurant_id=#{@rest.id}", class: 'btn btn-default' %>
 </p>
 
-<p><strong>Name</strong> <%= @rest.name %></p>
+<p><strong>Name</strong>: <%= @rest.name %></p>
 <p><strong>Address</strong>: <%= @rest.address %></p>
+<p><strong>Open hours</strong>: 11:00am - 10:00pm every day</p>
+
+
+<% if session["user_id"].present? %>
+  <% u = User.find_by(id: session["user_id"]) %>
+  <% if u.admin == true %>
+  	<!-- <button class="btn btn-default" type="submit">Button</button> -->
+  	<p><strong>Number of tables</strong>: <%= @rest.table_number %></p>
+    <p><%= link_to "Edit", "/restaurants/#{@rest.id}/edit", class: 'btn btn-default' %></p>
+    <p><%= link_to "#{Reservation.where(restaurant_id: @rest.id).count} reservations", "/reservations/#{@rest.id}" %></p>
+  <% end %>
+<% end %>
+
+<p><%= link_to "#{Review.where(restaurant_id: @rest.id).count} reviews", "/reviews?restaurant_id=#{@rest.id}" %></p>
 
 <hr>
 

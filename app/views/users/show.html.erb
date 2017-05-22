@@ -1,6 +1,22 @@
-<h3>Reservations</h3>
+<h2>My Profile</h2>
 
-  <table class="table table-striped">
+<p>
+  <strong>Name:</strong> <%= @user.name %>
+</p>
+<p>
+  <strong>Email:</strong> <%= @user.email %>
+</p>
+<p>
+  <strong>Points:</strong> <%= @user.points %>
+</p>
+
+<p><%= link_to "Edit", "/users/#{@user.id}/edit", class: 'btn btn-default' %></p>
+
+<% if @user.admin == false %>
+<% @reservations = Reservation.where(user_id: @user.id) %>
+
+<h3>Reservation History</h3>
+<table class="table table-striped">
     <thead>
       <tr>
         <th>Last Modifed</th>
@@ -31,3 +47,6 @@
       <% end %>
     </tbody>
   </table>
+
+  <% end %>
+  

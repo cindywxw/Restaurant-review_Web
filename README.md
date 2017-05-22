@@ -1,13 +1,13 @@
-Final project week 6:
+=======
+Final Project week 7:
 
-1. Wrote the models.yml file
-Classes: Restaurant, User, Administrator, Reservation, Review, Table, Openhour  
-2. Model validations
-3. Model associations: has_many, belongs_to
-4. Wrote the seeds.rb file, created data.
-
-
-
+I did some stupid commands and lost my work during last work. Unfortunately, I didn't get those codes recovered even with Prof. Cohen's help. So I had to rewrote the codes. Sorry for the late submission.
+So far the project fulfill the following:
+1. Classes: Restaurant, User, Reservation, Review, Table. I dropped tables Openhour and Administrator.
+2. User can sign up, log in, and log out to/from the TinyTable system.
+3. General user (e.g. "Cookie Monster".) can view and edit his profile, including name, password, email address (can only view his TinyTable points). He can make a reservation between 11am-10pm and write a review for a restaurant. He can view his reviews and reservations. For security: When a user changes his profile, he needs to authenticate himself using his password. A user can't view other people's profile, reservation or review.
+Problem: So far, making a reservation have bugs. I'm still working on it. (formatting and openhour limitaion)
+4. Administrator (e.g. "Justin Bieber") can do all the things that a general user can do. In addtion, he can add, edit and delete restaurants. He can view reservations for a restaurant or for all restaurants.
 
 
 

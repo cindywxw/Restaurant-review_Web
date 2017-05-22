@@ -3,22 +3,22 @@ Restaurant
   address: text  
   table_number: integer
 
-Openhour
-  restaurant_id: integer
-  mon_open: text
-  mon_close: text
-  tues_open: text
-  tues_close: text
-  wed_open: text
-  wed_close: text
-  thr_open: text
-  thr_close: text
-  fri_open: text
-  fri_close: text
-  sat_open: text
-  sat_close: text
-  sun_open: text
-  sun_close: text
+# Openhour
+#   restaurant_id: integer
+#   mon_open: text
+#   mon_close: text
+#   tues_open: text
+#   tues_close: text
+#   wed_open: text
+#   wed_close: text
+#   thr_open: text
+#   thr_close: text
+#   fri_open: text
+#   fri_close: text
+#   sat_open: text
+#   sat_close: text
+#   sun_open: text
+#   sun_close: text
 
 
 Table
@@ -28,14 +28,15 @@ Table
 
 User
   name: text
-  password: text
+  email: text
+  password_digest: text
+  admin: boolean(false)
   points: integer
-  email_address: text
 
 
-Administrator
-  name: text
-  password: text
+# Administrator
+#   name: text
+#   password: text
 
 
 Reservation

@@ -12,30 +12,6 @@
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "administrators", force: :cascade do |t|
-    t.text "name"
-    t.text "password"
-  end
-
-  create_table "openhours", force: :cascade do |t|
-    t.integer "restaurant_id"
-    t.text    "mon_open"
-    t.text    "mon_close"
-    t.text    "tues_open"
-    t.text    "tues_close"
-    t.text    "wed_open"
-    t.text    "wed_close"
-    t.text    "thr_open"
-    t.text    "thr_close"
-    t.text    "fri_open"
-    t.text    "fri_close"
-    t.text    "sat_open"
-    t.text    "sat_close"
-    t.text    "sun_open"
-    t.text    "sun_close"
-    t.index ["restaurant_id"], name: "index_openhours_on_restaurant_id"
-  end
-
   create_table "reservations", force: :cascade do |t|
     t.integer  "restaurant_id"
     t.integer  "user_id"
@@ -70,9 +46,10 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "users", force: :cascade do |t|
     t.text    "name"
-    t.text    "password"
+    t.text    "email"
+    t.text    "password_digest"
+    t.boolean "admin",           default: false
     t.integer "points"
-    t.text    "email_address"
   end
 
 end

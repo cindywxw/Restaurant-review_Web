@@ -1,0 +1,28 @@
+
+
+<br></br>
+<p class="pull-right">
+  <%= link_to "Make a reservation", "/reservations/new?restaurant_id=#{@rest.id}", class: 'btn btn-default' %>
+  <%= link_to "Write a review", "/reviews/new?restaurant_id=#{@rest.id}", class: 'btn btn-default' %>
+</p>
+
+<% rest = Restaurant.find_by(id: @review.restaurant_id) %>
+
+<p><strong>Restaurant</strong>: <%= rest.name %></p>
+<p><strong>Comment</strong>: <%= @review.content %></p>
+
+<% @review.restaurant_id = rest.id %>
+
+<% if session["user_id"].present? %>
+  <% u = User.find_by(id: session["user_id"]) %>
+  <% if u.id == @review.user_id %>
+  	<!-- <button class="btn btn-default" type="submit">Button</button> -->
+    <p><%= link_to "Edit", "/reviews/#{@review.id}/edit", class: 'btn btn-default' %></p>
+  <% end %>
+<% end %>
+
+<p><i class="fa fa-long-arrow-left" aria-hidden="true"></i><%= link_to "Back to reviews", "/reviews" %></p>
+
+<hr>
+
+
