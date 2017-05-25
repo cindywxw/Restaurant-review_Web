@@ -12,3 +12,16 @@ should use the `string` column, instead of `text`. I believe all of your `text` 
 
 - Also, make sure to use upper case for your model names. e.g., `Openhour` should be `OpenHour`.
 Everywhere else, use underscores: `open_hours`
+
+----------------------------------------------------------
+Milestone #2 Grade
+
+Score: (10/10)
+
+Good job.
+
+- Some of your code (e.g., `restaurants/new.html.erb`) is still referencing a `Flight` model
+
+- Make sure to take note of my comment about using the appropriate case from model names.
+
+- Please remove commented out code you're no longer using.
