@@ -8,10 +8,11 @@
 
 Restaurant.delete_all
 Table.delete_all
-Openhour.delete_all
+# Openhour.delete_all
 User.delete_all
-Administrator.delete_all
+# Administrator.delete_all
 Reservation.delete_all
+Review.delete_all
 
 restaurants = [["Valois","1518 E 53rd St, Chicago, IL, 60615",10],
         	   ["Alinea","1723 N Halsted St, Chicago, IL, 60614",10],
@@ -21,12 +22,18 @@ restaurants = [["Valois","1518 E 53rd St, Chicago, IL, 60615",10],
 
 ["Cookie Monster", "Abraham Lincoln", "Luke Skywalker", "Harry Potter",
 "Mary Poppins", "Dorothy Gale", "Luna Lovegood"].each do |name|
-  User.create name: name, password: "123456", points: 0
+  email_address = name.split.first.downcase + "@tinytable.com"
+  lame_password = name.split.first.downcase
+  User.create name: name, email: email_address, password: lame_password, points: 0
 end
 
 ["Justin Bieber", "Taylor Swift"].each do |name|
-  Administrator.create name: name, password: "123456"
+  email_address = name.split.first.downcase + "@tinytable.com"
+  lame_password = name.split.first.downcase
+  User.create name: name, email: email_address, password: lame_password, points: 0, admin: true
 end
+
+# puts "here"
 
 numbers = ["2", "4", "6", "8", "10"]
 
@@ -40,10 +47,14 @@ restaurants.each do |entry|
 		Table.create restaurant: rest, table_order: t, capacity: numbers.sample
 	end 
 	Reservation.create restaurant: rest, guest: User.sample, people: Table.last.capacity, reserve_at: (Time.now - 2.days).utc.to_s(:db), dine_at: (Time.now - 1.days).utc.to_s(:db)
+	# puts "here"
 	Review.create restaurant: rest, reviewer: Reservation.last.guest, content: "Yummy!", updated_at: Time.now.utc.to_s(:db)
 	u = User.find_by(id: Reservation.last.guest)
+	# puts "#{u.name}"
 	newpoint = u.points + 10
-	u.update points: newpoint
+	u.points = newpoint
+	# u.update points: newpoint
+	u.save(validate: false)
 end
 
 
@@ -51,6 +62,6 @@ end
 puts "There are now:"
 puts "  #{Restaurant.count} restaurants"
 puts "  #{User.count} user accounts"
-puts "  #{Administrator.count} administrator accounts"
+# puts "  #{Administrator.count} administrator accounts"
 puts "  #{Reservation.count} reservations"
 puts "  #{Review.count} reviews"

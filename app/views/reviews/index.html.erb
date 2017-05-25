@@ -1,0 +1,41 @@
+<h3>Reviews</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Restaurant</th>
+        <th>Review</th>
+        <th>Last Modifed</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @reviews.each do |review| %>
+        <%restaurant = Restaurant.find_by(id: review.restaurant_id) %>
+
+        <tr>
+            
+            <td><%= restaurant.name %></td>
+            <td><%= review.content %></td>
+            <td><%= review.updated_at.strftime("%A %B %e, %Y, %H:%M:%S") %></td>
+            <% if session["user_id"].present? %>
+              <% if review.user_id == session["user_id"] %>
+                <td><%= link_to "Edit", "/reviews/#{review.id}/edit" %>
+                <td><%= link_to "Delete", "/reviews/#{review.id}", method: 'delete' %>
+              <% else %>
+              <td></td>
+              <td></td>
+              <% end %>
+            <% else %>
+              <td></td>
+              <td></td>
+            <% end %>
+
+            
+        </tr>
+
+      <% end %>
+    </tbody>
+  </table>

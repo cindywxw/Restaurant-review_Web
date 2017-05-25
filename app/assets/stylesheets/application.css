@@ -12,23 +12,32 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap-datepicker
+ *= require bootstrap-datepicker3
+ @import 'bootstrap-sprockets';
+ @import 'bootstrap';
+ @import 'bootstrap-datetimepicker';
  */
 
 body { width: 960px; margin: 15px auto; font-family: 'Roboto', sans-serif; font-size: 18px; }
+/*body {font-family: 'Dancing Script', cursive; }*/
 input, select { font-size: 18px; padding: 6px; }
 table { width: 100%; border-collapse: collapse;}
-th { border-bottom: solid 1px #999; padding: 12px 0px; }
+th { border-bottom: solid 1px #999;text-align: center; padding: 12px 0px; }
 td { padding: 12px; text-align: center;}
 tbody tr:nth-of-type(odd) { background-color: #f0f0f0; }
 th, td { border: 1px solid #ddd }
+/*.flightnum { font-family:"Helvetica"; color:red; }*/
 img { box-shadow: 9px 9px 9px #777;}
 
 .notice {
-  background-color: #447a0d;
+  background-color: #FFE4E1;
   padding: 12px;
-  color: #FFF;
+  color: #EE82EE;
   border-radius: 8px;
 }
+
+
 
 label {
   width: 150px;

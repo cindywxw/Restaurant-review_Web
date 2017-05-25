@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :restaurants
   resources :reservations
   resources :users
-  resources :administrators
+  # resources :administrators
   resources :reviews
   resources :tables
 

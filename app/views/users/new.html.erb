@@ -1,9 +1,5 @@
-<h3>Sign Up</h3>
-<ul>
-  <% @user.errors.full_messages.each do |msg| %>
-    <li> <%= msg %> </li>
-  <% end %>
-</ul>
+<h2>Sign Up</h2>
+
 
 <%= form_tag "/users" do %>
 
@@ -17,17 +13,23 @@
     <%= text_field_tag "password", @user.password %>
   </p>
 
+  <p>
+    <%= label_tag "email" %>
+    <%= text_field_tag "email", @user.email %>
+  </p>
+
+
 <!--   <p>
     <%= label_tag "confirm password" %>
     <%= text_field_tag "password" %>
   </p> -->
 
   <p>
-      <%= submit_tag "Sign Me Up", class: 'button' %>
+      <%= submit_tag "Sign Me Up", class: 'btn btn-success' %>
 
       or
 
-      <%= link_to "Cancel", "/reservations" %>
+      <%= link_to "Cancel", "/" %>
   </p>
 
 <% end %>

@@ -1,7 +1,7 @@
 class AdministratorsController < ApplicationController
 
   def new
-    @table = Table.new
+    # @table = Table.new
   end
 
 

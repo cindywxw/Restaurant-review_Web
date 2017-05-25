@@ -1,13 +1,29 @@
-<p><%= link_to "Add a Restaurant", "/restaurants/new", class: 'button' %></p>
 
-  <table>
+
+<% if session["user_id"].present? %>
+  <% u = User.find_by(id: session["user_id"]) %>
+  <% if u.admin == true %>
+    <br>
+    <p><%= link_to "Add a Restaurant", "/restaurants/new", class: 'btn btn-info' %></p>
+  <% end %>
+<% end %>
+
+<br></br>
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th></th>
-        <th></th>
+        <% if session["user_id"].present? %>
+          <% u = User.find_by(id: session["user_id"]) %>
+          <% if u.admin == true %>
+            <th></th>
+            <th></th>
+            <th>Number of Tables</th>
+          <% end %>
+        <% end %>
+
         <th>Name</th>
         <th>Address</th>
-        <th>Number of Tables</th>
+        
       </tr>
     </thead>
     <tbody>
@@ -15,12 +31,18 @@
       <% @restaurants.each do |rest| %>
 
         <tr>
-            <td><%= link_to "Toast", "/restaurants/#{rest.id}", method: 'delete' %>
-            <td><%= link_to "Edit", "/restaurants/#{rest.id}/edit" %>
+            <% if session["user_id"].present? %>
+              <% u = User.find_by(id: session["user_id"]) %>
+              <% if u.admin == true %>
+                <td><%= link_to "Toast", "/restaurants/#{rest.id}", method: 'delete' %>
+                <td><%= link_to "Edit", "/restaurants/#{rest.id}/edit" %>
+                <td><%= rest.table_number %></td>
+              <% end %>
+            <% end %>
             <td>
               <%= link_to "#{rest.name}", "/restaurants/#{rest.id}" %>
             <td><%= rest.address %></td>
-            <td><%= rest.table_number %></td>
+            <td><%= link_to "Reviews", "/reviews?restaurant_id=#{rest.id}" %>
 
         </tr>
 
