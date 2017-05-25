@@ -20,6 +20,8 @@ Score: (10/10)
 
 Good job.
 
+- Missing `has_secure_password` in your `User` model.
+
 - Some of your code (e.g., `restaurants/new.html.erb`) is still referencing a `Flight` model
 
 - Make sure to take note of my comment about using the appropriate case from model names.
