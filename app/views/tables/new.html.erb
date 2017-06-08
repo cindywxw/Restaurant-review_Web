@@ -1,28 +1,31 @@
-<h3>Sign Up</h3>
-<ul>
-  <% @user.errors.full_messages.each do |msg| %>
-    <li> <%= msg %> </li>
-  <% end %>
-</ul>
+<h3>Add a Table</h3>
 
-<%= form_tag "/users" do %>
+<% @rest = Restaurant.find_by(id: params["restaurant_id"]) %>
+
+<%= form_tag "/tables" do %>
 
   <p>
-    <%= label_tag "name" %>
-    <%= text_field_tag "name", @user.name %>
+    <%= label_tag "Restaurant" %>
+    <%= @rest.name %>
   </p>
 
   <p>
-    <%= label_tag "password" %>
-    <%= text_field_tag "password", @user.password %>
+    <%= label_tag "Capacity" %>
+    <%= text_field_tag "capacity" %>
   </p>
 
+<!--   <p>
+    <%= label_tag "Number of Table" %>
+    <%= text_field_tag "table_number" %>
+  </p> -->
+  <%= hidden_field_tag(:restaurant_id, @rest.id) %>
+
   <p>
-      <%= submit_tag "Sign Me Up", class: 'button' %>
+      <%= submit_tag "Add table", class: 'btn btn-success' %>
 
       or
 
-      <%= link_to "Cancel", "/reservations" %>
+      <%= link_to "Cancel", "/restaurants/#{@rest.id}/edit" %>
   </p>
 
 <% end %>

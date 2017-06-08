@@ -2,20 +2,73 @@
 
 <%= form_tag "/reviews" do %>
 
-  <p>
-    <%= label_tag "Content" %>
-    <%#= text_field_tag "content", @review.content %>
-    <textarea class="form-control" rows="3" name ="content"><%= @review.content %></textarea>
-  </p>
+<p>
+  <%= label_tag "Restaurant" %>
+  <% rest = Restaurant.find_by(id: params["restaurant_id"]) %>
+  <%= rest.name %>
+</p>
+<p>
+  <%= label_tag "Content" %>
+  <%#= text_field_tag "content", @review.content %>
+  <textarea class="form-control" rows="3" name ="content"><%= @review.content %></textarea>
+</p>
 
 
-  <p>
-      <%= submit_tag "Save Changes", class: 'btn btn-success' %>
+<p>
+  <%= submit_tag "Save Changes", class: 'btn btn-success' %>
 
-      or
+  or
 
-      <%= link_to "Cancel", "/reviews/#{@review.id}" %>
-  </p>
+  <%= link_to "Cancel", "/reviews/#{@review.id}" %>
+</p>
 
 
 <% end %>
+
+
+<% @userReviews = Review.where(user_id: session["user_id"]).order("updated_at DESC") %>
+<% @reviews = @userReviews.where(restaurant_id: cookies["rest_id"]).order("updated_at DESC") %>
+<% if @reviews.present? %>
+
+<h4>Past reviews on this restaurant</h4>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Review</th>
+      <th>Reviewer</th>
+      <th>Last Modifed</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @reviews.each do |review| %>
+    <%restaurant = Restaurant.find_by(id: review.restaurant_id) %>
+
+    <tr>
+
+      <td><%= restaurant.name %></td>
+      <td><%= review.content %></td>
+      <td><%= review.reviewer.name %></td>
+      <td><%= review.updated_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
+      <% if session["user_id"].present? %>
+      <% if review.user_id == session["user_id"] %>
+      <td><%= link_to "Edit", "/reviews/#{review.id}/edit" %>
+        <td><%= link_to "Delete", "/reviews/#{review.id}", method: 'delete' %>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
+          <% end %>
+        </tr>
+
+        <% end %>
+      </tbody>
+    </table>
+
+    <% else %>
+    <p>No reviews you have written on this restaurant.</p>
+    <% end %>

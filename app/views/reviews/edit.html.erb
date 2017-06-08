@@ -1,6 +1,7 @@
 <%= form_tag "/reviews/#{@review.id}", method: 'patch' do %>
 
 <br></br>
+  <p><strong>Restaurant</strong>: <%= @review.restaurant.name %></p>
   <p>
     <%= label_tag "Content" %>
     <%#= text_field_tag "content", @review.content %>

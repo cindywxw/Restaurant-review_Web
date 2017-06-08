@@ -8,13 +8,30 @@
   <link href= https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://envoy.com/css/envoy.min.css">
+
+  <link rel="icon" type="image/png" href="/icons8.png" />
   <style media="screen">
-    .brand { font-family: 'Ravi Prakash', cursive; font-size: 200%; vertical-align: middle;}
+    .brand { 
+      font-family: 'Ravi Prakash', cursive; font-size: 180%; vertical-align: middle; 
+      text-decoration: none !important; color: red !important;}
     .navbar {
       margin-bottom: 0px;
     }
     .navbar-nav>li>a {
-    color: #777;
+      color: #777;
+    }
+    .btn {
+      border:1px solid;
+      background-color:white;
+    }
+    #signup {
+      color: #ef3934;background-color:transparent;
+    }
+    #inout:hover {
+      color: #ef3934 !important;
+    }
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th {
+      border-top: 1px solid #ddd;
     }
   </style>
 
@@ -26,47 +43,36 @@
 </head>
 <body class="flex flex-column" style="min-height: 100vh;">
   <header class="z4 relative bg-gray ">
- <!--    <div class="py2 container mx-auto">
-      <div class="flex flex-center">
-        <div class="nav navbar-nav"> -->
-          <nav class="navbar navbar-default" role="navigation">
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
 
-                <%= link_to "TinyTable", "/" ,:class => "brand" %>
-              </ul>
-              <!-- </div> -->
-              <!-- <nav class="flex-auto"> -->
-              <!-- <div class="left xs-hide sm-hide"> -->
-              <!-- <div class="relative inline-block js-desktop-nav-item"> -->
-              <ul class="nav navbar-nav navbar-center">
-                <li class = "slate text-decoration-none px2"><%= link_to "Restaurants", "/restaurants" %></li>
-                <li class = "slate text-decoration-none px2"><%= link_to "Reservations", "/reservations" %></li>
-              </ul>
-          <!--   </div>
-          </div>
-        </nav> -->
-
-        <!-- <div class="right xs-hide sm-hide flex-none"> -->
-        <!-- <div class="nav navbar-nav navbar-right"> -->
-        <ul class="nav navbar-nav navbar-right">
-          <li class = "slate text-decoration-none mr4"><%= link_to "Sign Up", "/users/new", :class => "btn btn-outline red" %></li>
-          <% if session["user_id"].present? %>
-          <li class = "slate text-decoration-none mr4"><%= link_to "Sign Out", "/logout" %></li>
-
-          <li><%= link_to "Hi, #{User.find_by(id: session["user_id"]).name}", "/users/#{session["user_id"]}" %></li>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <%= link_to image_tag("/icons8.png", size: "25"), "/" %>
+          <%= link_to "TinyTable", "/" ,:class => "brand" %>
         </ul>
-        <% else %>
-        <li class = "slate text-decoration-none mr4"><%= link_to "Sign In", "/login" %></li>
+
+        <ul class="nav navbar-nav navbar-center">
+          <li class = "slate text-decoration-none px2"><%= link_to "Restaurants", "/restaurants" %></li>
+          <li class = "slate text-decoration-none px2"><%= link_to "Reservations", "/reservations" %></li>
+        <% if session["user_id"].present? && User.find_by(id: session["user_id"]).admin == true %>
+          <li class = "slate text-decoration-none px2"><%= link_to "Stats", "/stats" %></li>
         <% end %>
-      </ul>
-
-
+        </ul>
+        <ul class = "nav navbar-nav navbar-right">
+          <li class = "slate text-decoration-none mr4"><%= link_to "Sign Up", "/users/new", :class => "btn btn-outline red", :id => "signup" %></li>
+          <% if session["user_id"].present? %>
+            <li class = "slate text-decoration-none mr4"><%= link_to "Log Out", "/logout", :id => "inout"  %></li>
+            <% usrname = User.find_by(id: session["user_id"]).name.split %>
+            <li><%= link_to "Hi, #{usrname[0]}!", "/users/#{session["user_id"]}" %></li>
+            </ul>
+          <% else %>
+            <li class = "slate text-decoration-none mr4"><%= link_to "Log In", "/login", :id => "inout" %></li>
+            </ul>
+          <% end %>
 
     </div>
   </nav>
-<!--       </div>
-</div> -->
+
 </header>
 
 <% if notice.present? %>
@@ -76,42 +82,10 @@
 
 <%= yield %>
 
+<%= yield :charts_js %> 
+<%#= yield_content :charts_js %>
+
 </body>
 
 </html>
 
-
-<html>
-<body>
-
-
-  <navbar>
-    <ul>
-      <!-- <li class="brand"><%= link_to "TinyTable", "/" %><i class="fa fa-cutlery" aria-hidden="true"></i></li> -->
-
-      <!-- <li class="brand"><%= link_to "TinyTable", "/" %></li>
-      <li><%= link_to "Restaurants", "/restaurants" %></li>
-      <li><%= link_to "Reservations", "/reservations" %></li> -->
-
-      <%# if cookies["user_id"].present? %>
-      <!-- <li>Hi, <%#= User.find_by(id: cookies["user_id"]).name %></li> -->
-      <%# end %>
-
-<!--       <div class="pull-right">
-
-        <li><%= link_to "Sign Up", "/users/new" %></li>
-        <li><%= link_to "Sign In", "/login" %></li>
-        <li><%= link_to "Sign Out", "/logout" %></li>
-      </div> -->
-
-
-    </ul>
-  </navbar>
-<!-- 
-  <% if notice.present? %>
-  <p class="notice"> <%= notice %> </p>
-  <% end %>
-
-  <%#= yield %>
-</body> -->
-</html>

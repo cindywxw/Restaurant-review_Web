@@ -5,13 +5,13 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
+  # delete '/tables/:id' => 'tables#destroy'
 
   resources :restaurants
   resources :reservations
   resources :users
-  # resources :administrators
   resources :reviews
   resources :tables
-
+  resources :stats
 
 end

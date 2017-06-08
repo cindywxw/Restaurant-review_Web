@@ -10,7 +10,22 @@
 
   <p>
     <%= label_tag "password" %>
-    <%= text_field_tag "password", @user.password %>
+    <%= password_field_tag "password", @user.password %>
+
+    <input type="checkbox" id="reveal">
+      <label for="reveal">Show Password</label>
+
+      <script type="text/javascript"> 
+      $(document).ready(function() {
+        $("#reveal").on("change", function(e) {
+          if(this.checked) {
+            $("#password").attr("type","text");
+          } else {
+            $("#password").attr("type","password");
+          }
+        })
+      })
+        </script>
   </p>
 
   <p>

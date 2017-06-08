@@ -1,33 +1,125 @@
 <h3>Reservations</h3>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Last Modifed</th>
-        <th>Restaurant</th>
-        <th>Guest</th>
-        <th>Dine time</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
 
-      <% @reservations.each do |reservation| %>
+<h4>Upcoming reservations</h4>
+<% if @futureReservation.present? %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <!-- <th>Last Modifed</th> -->
+      <th>Restaurant</th>
+      <th>Guest</th>
+      <th>Table for</th>
+      <th>Dine time</th>
+      <th></th>      
+    </tr>
+  </thead>
+  <tbody>
+    <% current = Time.current %>
 
-        <tr>
-            <td><%= reservation.reserve_at.strftime("%A %B %e, %Y, %H:%M:%S") %></td>
-            <td><%= reservation.restaurant.name %></td>
-            <td><%= reservation.guest.name %></td>
-            <td><%= reservation.dine_at.strftime("%A %B %e, %Y, %H:%M:%S") %></td>
-            <% if session["user_id"].present? %>
-              <% if session["user_id"] == reservation.user_id %>
-                <td><%= link_to "Cancel", "/reservations/#{reservation.id}", method: 'delete' %>
-              <% else %>
-                <td></td>
-              <% end %>
-            <% end %>
-        </tr>
+    <% @futureReservation.each do |reservation| %>
 
+    <tr>
+      <!-- <td><%#= reservation.reserve_at.in_time_zone("Central Time (US & Canada)").strftime("%A %B %e, %Y, %H:%M:%S") %></td> -->
+      <td><%= reservation.restaurant.name %></td>
+      <td><%= reservation.guest.name %></td>
+      <td><%= reservation.people %></td>
+      <td><%= reservation.dine_at.in_time_zone("Central Time (US & Canada)").strftime("%A %B %e, %Y, %H:%M:%S") %></td>
+      <% if session["user_id"].present? %>
+      <% if session["user_id"] == reservation.user_id %>
+      <%# if reservation.dine_at%>
+      <td><%= link_to "Cancel", "/reservations/#{reservation.id}", method: 'delete' %></td>
+      <% else %>
+      <td></td>
       <% end %>
-    </tbody>
-  </table>
+      <% end %>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+<h4>No upcoming reservations</h4>
+<% end %>
+
+<h4>Past reservations</h4>
+<% if @pastReservation.present? %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Last Modifed</th>
+      <th>Restaurant</th>
+      <th>Guest</th>
+      <th>Dine time</th>
+      <th></th>      
+    </tr>
+  </thead>
+  <tbody>
+    <% current = Time.current %>
+
+    <% @pastReservation.each do |reservation| %>
+
+    <tr>
+      <td><%= reservation.reserve_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
+      <td><%= reservation.restaurant.name %></td>
+      <td><%= reservation.guest.name %></td>
+      <td><%= reservation.dine_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
+      <% if session["user_id"].present? %>
+      <% if session["user_id"] == reservation.user_id %>
+      <td><%= link_to "Write review", "/reviews/new?restaurant_id=#{reservation.restaurant.id}" %></td>
+      <% else %>
+      <td></td>
+      <% end %>
+      <% end %>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+<h4>No past reservations</h4>
+<% end %>
+
+
+<h4>All reservation history</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Reserve at</th>
+      <th>Restaurant</th>
+      <th>Guest</th>
+      <th>Dine time</th>
+      <th></th>       
+    </tr>
+  </thead>
+  <tbody>
+    <% current = Time.current %>
+
+    <% @reservations.each do |reservation| %>
+
+    <tr>
+      <td><%= reservation.reserve_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
+      <td><%= reservation.restaurant.name %></td>
+      <td><%= reservation.guest.name %></td>
+      <td><%= reservation.dine_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
+      <%# if session["user_id"].present? %>
+      <%# if session["user_id"] == reservation.user_id %>
+      <%# if reservation.dine_at%>
+      <!-- <td><%#= link_to "Cancel", "/reservations/#{reservation.id}", method: 'delete' %></td> -->
+      <%# else %>
+      <!-- <td></td> -->
+      <%# end %>
+      <%# end %>
+      <% if reservation.dine_at < current %>
+      <td>past</td>
+      <% else %>
+      <td>future</td>
+      <% end %>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>
+

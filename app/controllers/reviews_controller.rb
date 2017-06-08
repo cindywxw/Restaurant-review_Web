@@ -2,7 +2,18 @@ class ReviewsController < ApplicationController
 
   def new
     if session["user_id"].present?
-      # @review = Review.new
+      @review = Review.new
+      if (params["restaurant_id"].present?)
+        rest = Restaurant.find_by(id: params["restaurant_id"])
+        if rest.present?
+          cookies["rest_id"] = rest.id
+          # @review = Review.new
+        else
+          redirect_to "/", notice: "Restaurant record not found. Please choose a proper restaurant first."
+        end
+      else
+        redirect_to "/", notice: "Please choose a restaurant first."
+      end
     else
       redirect_to "/restaurants/#{cookies["rest_id"]}", notice: "Please sign in first."      
     end
@@ -14,13 +25,13 @@ class ReviewsController < ApplicationController
       @review.content = params["content"]
       @review.restaurant_id = cookies["rest_id"]
       @review.user_id = session["user_id"]
-      @review.updated_at = Time.now.utc.to_s
+      @review.updated_at = Time.current.utc.to_s
 
       if @review.save
         redirect_to "/reviews/:id", notice: "Thanks for your review!"
       else 
         # redirect_to "/users/new", notice: "Whoa, nice try!"
-        redirect_to "/reviews", notice: "Sorry ,review not created. #{@review.errors.full_message} Please try again."
+        redirect_to "/reviews", notice: "Sorry ,review not created. #{@review.errors.full_messages} Please try again."
       end
     else
       redirect_to "/", notice: "Please sign in first."
@@ -68,18 +79,19 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new
     @review.content = params["content"]
-    @review.restaurant_id = params["restaurant_id"]
+    # @review.restaurant_id = params["restaurant_id"]
+    @review.restaurant_id = cookies["rest_id"]
     @review.user_id = session["user_id"]
-    @review.updated_at = Time.now.utc.to_s
+    @review.updated_at = Time.current.utc.to_s
     
     if @review.save
-      u = User.find_by(id: session["user_id"])
-      newpoint = u.points + 10
-      u.points = newpoint
-      u.save(validate: false)
+      # u = User.find_by(id: session["user_id"])
+      # newpoint = u.points + 10
+      # u.points = newpoint
+      # u.save(validate: false)
       redirect_to "/reviews/#{@review.id}", notice: "Thanks for your review!"
     else 
-      render "/", notice: "Record not saved."
+      redirect_to "/", notice: "Record not saved. #{@review.errors.full_messages}"
     end
   end
 
@@ -88,8 +100,9 @@ class ReviewsController < ApplicationController
     if session["user_id"] != @review.user_id
       redirect_to "/reviews/#{@review.id}", notice: "Sorry, you cannot edit this review."
     end 
+    @review.restaurant_id = @review.restaurant_id
     @review.content = params["content"]
-    @review.updated_at = Time.now.utc.to_s
+    @review.updated_at = Time.current.utc.to_s
     
     if @review.save
       redirect_to "/reviews/#{@review.id}", notice: "Thanks for revising reviews!"
@@ -99,16 +112,17 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    if session["user_id"].blank?
-      redirect_to "/", notice: "Please sign in first."
-    else
+    if session["user_id"].present?
       @review = Review.find_by(id: params["id"])
       if session["user_id"] != @review.user_id
         redirect_to "/reviews/#{@review.id}", notice: "Sorry, you cannot delete this review."
       else
       # notice: "Review deleted." 
         @review.delete
+        redirect_to "/reviews", notice: "Review deleted."
       end
+    else
+      redirect_to "/", notice: "Please sign in first."
     end  
   end
 

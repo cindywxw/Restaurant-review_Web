@@ -1,30 +1,61 @@
+<head>
+  <style media="screen">
+    table { width: auto !important; }
+    }
+  </style>
+</head>
+
 <h3>Edit Restaurant Info</h3>
 
 <%= form_tag "/restaurants/#{@rest.id}", method: 'patch' do %>
 
+<%# @rest = Restaurant.find_by(id: @rest.id) %>
+<p>
+  <%= label_tag "Name" %>
+  <%= text_field_tag "name", @rest.name %>
+</p>
 
-  <p>
-    <%= label_tag "Name" %>
-    <%= text_field_tag "name", @rest.name %>
-  </p>
+<p>
+  <%= label_tag "Address" %>
+  <%= text_field_tag "address", @rest.address %>
+</p>
 
-  <p>
-    <%= label_tag "Address" %>
-    <%= text_field_tag "address", @rest.address %>
-  </p>
+<h4>There are <%= @rest.table_number %> tables:</h4>
 
-  <p>
-    <%= label_tag "Number of Table" %>
-    <%= select_tag "table_number", options_for_select((1..10).map {|i| [i,i] }, @rest.table_number) %>
-  </p>
+<% @tables = Table.where(restaurant_id: @rest.id).order("table_order ASC") %>
 
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Table No.</th>
+      <th>Capacity</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
 
-  <p>
-      <%= submit_tag "Save Changes", class: 'button' %>
+   <% @tables.each do |restTable| %>
 
-      or
+   <tr>
+    <td><%= restTable.table_order %></td>
+    <td><%= restTable.capacity %></td>
+    <td><%= link_to "delete", "/tables/#{restTable.id}?restaurant_id=#{@rest.id}", method: 'delete' %></td>
+  </tr>
+  <% end %>
+  <% if @rest.table_number < 10 %>
+    <td><%= link_to "add table", "/tables/new?restaurant_id=#{@rest.id}" %></td>
+  <% end %>
+  </tr>
 
-      <%= link_to "Cancel", "/restaurants" %>
-  </p>
+</tbody>
+</table>
+
+<p>
+  <%= submit_tag "Save Changes", class: 'btn btn-success' %>
+
+  or
+
+  <%= link_to "Cancel", "/restaurants" %>
+</p>
 
 <% end %>

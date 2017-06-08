@@ -42,6 +42,9 @@ gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
+# googlechart
+gem "chartkick"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

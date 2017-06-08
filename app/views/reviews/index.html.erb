@@ -1,10 +1,11 @@
 <h3>Reviews</h3>
 
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Restaurant</th>
         <th>Review</th>
+        <th>Reviewer</th>
         <th>Last Modifed</th>
         <th></th>
         <th></th>
@@ -19,18 +20,16 @@
             
             <td><%= restaurant.name %></td>
             <td><%= review.content %></td>
-            <td><%= review.updated_at.strftime("%A %B %e, %Y, %H:%M:%S") %></td>
+            <td><%= review.reviewer.name %></td>
+            <td><%= review.updated_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
             <% if session["user_id"].present? %>
               <% if review.user_id == session["user_id"] %>
                 <td><%= link_to "Edit", "/reviews/#{review.id}/edit" %>
                 <td><%= link_to "Delete", "/reviews/#{review.id}", method: 'delete' %>
               <% else %>
-              <td></td>
-              <td></td>
+                <td></td>
+                <td></td>
               <% end %>
-            <% else %>
-              <td></td>
-              <td></td>
             <% end %>
 
             
@@ -39,3 +38,5 @@
       <% end %>
     </tbody>
   </table>
+
+   <%= paginate @reviews %>

@@ -20,7 +20,7 @@
   	<!-- <button class="btn btn-default" type="submit">Button</button> -->
   	<p><strong>Number of tables</strong>: <%= @rest.table_number %></p>
     <p><%= link_to "Edit", "/restaurants/#{@rest.id}/edit", class: 'btn btn-default' %></p>
-    <p><%= link_to "#{Reservation.where(restaurant_id: @rest.id).count} reservations", "/reservations/#{@rest.id}" %></p>
+    <p><%= link_to "#{Reservation.where(restaurant_id: @rest.id).count} reservations", "/reservations?restaurant_id=#{@rest.id}" %></p>
   <% end %>
 <% end %>
 

@@ -19,7 +19,16 @@
  @import 'bootstrap-datetimepicker';
  */
 
-body { width: 960px; margin: 15px auto; font-family: 'Roboto', sans-serif; font-size: 18px; }
+ 
+body { 
+  width: 960px; margin: 15px auto; font-family: 'Roboto', sans-serif; font-size: 18px; 
+  background-image: url(/assets/dep2.png); 
+  background-position: cover;
+/*  background-color: green;
+  filter: alpha(opacity=60);
+  opacity: 0.6;*/
+}
+/*body { background: white url(/assets/dep.png) no-repeat; background-color: rgba(#000, .5); } */
 /*body {font-family: 'Dancing Script', cursive; }*/
 input, select { font-size: 18px; padding: 6px; }
 table { width: 100%; border-collapse: collapse;}
@@ -27,11 +36,10 @@ th { border-bottom: solid 1px #999;text-align: center; padding: 12px 0px; }
 td { padding: 12px; text-align: center;}
 tbody tr:nth-of-type(odd) { background-color: #f0f0f0; }
 th, td { border: 1px solid #ddd }
-/*.flightnum { font-family:"Helvetica"; color:red; }*/
-img { box-shadow: 9px 9px 9px #777;}
+/*img { box-shadow: 9px 9px 9px #777;}*/
 
 .notice {
-  background-color: #FFE4E1;
+  background-color: #fff;
   padding: 12px;
   color: #EE82EE;
   border-radius: 8px;
@@ -40,7 +48,7 @@ img { box-shadow: 9px 9px 9px #777;}
 
 
 label {
-  width: 150px;
+  width: 200px;
   text-align: left;
   display: inline-block;
   padding-right: 12px;
@@ -92,6 +100,11 @@ navbar ul li a:-webkit-any-link {
     text-decoration: none;
     color: #FFF;
     vertical-align: middle;
+}
+
+.red:hover{
+  background-color: red !important;
+  color: white !important; 
 }
 
 navbar ul li a:hover {

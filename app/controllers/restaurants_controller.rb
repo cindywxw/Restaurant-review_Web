@@ -2,8 +2,11 @@ class RestaurantsController < ApplicationController
 
   def show
     @rest = Restaurant.find_by(id: params["id"])
-    cookies["rest_id"] = @rest.id
-    
+    if @rest.present?
+      cookies["rest_id"] = @rest.id
+    else
+      redirect_to "/", notice: "Restaurant not in record."
+    end
   end
 
   def index
@@ -16,12 +19,14 @@ class RestaurantsController < ApplicationController
   end
 
   def edit
-    if session["user_id"].blank?
+    if session["user_id"].present?
+      if User.find_by(id: session["user_id"]).admin == false
+        redirect_to "/restaurants/#{params["id"]}", notice: "Sorry, you must be an administrator to edit the restaurant information."
+      end
+    else
       redirect_to "/", notice: "Please sign in first."
     end
-    if User.find_by(id: session["user_id"]).admin == false
-      redirect_to "/", notice: "Sorry, you must be an administrator to edit the restaurant information."
-    end
+    
     @rest = Restaurant.find_by(id: params["id"])
   end
 

@@ -10,6 +10,7 @@
 
 <p><strong>Restaurant</strong>: <%= rest.name %></p>
 <p><strong>Comment</strong>: <%= @review.content %></p>
+<p><strong>Last modified</strong>: <%= @review.updated_at.in_time_zone("Central Time (US & Canada)").strftime("%A %B %e, %Y, %H:%M:%S") %></p>
 
 <% @review.restaurant_id = rest.id %>
 
@@ -21,8 +22,56 @@
   <% end %>
 <% end %>
 
-<p><i class="fa fa-long-arrow-left" aria-hidden="true"></i><%= link_to "Back to reviews", "/reviews" %></p>
+<p><i class="fa fa-long-arrow-left" aria-hidden="true"></i><%= link_to "Back to reviews", "/reviews?restaurant_id=#{@review.restaurant_id}" %></p>
 
 <hr>
+<% @userReviews = Review.where(user_id: session["user_id"]).order("updated_at DESC") %>
+<% @reviews = @userReviews.where(restaurant_id: cookies["rest_id"]).order("updated_at DESC") %>
+<% if @reviews.present? %>
+
+<h4>Past reviews on this restaurant</h4>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Review</th>
+      <th>Reviewer</th>
+      <th>Last Modifed</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @reviews.each do |review| %>
+    <%restaurant = Restaurant.find_by(id: review.restaurant_id) %>
+
+    <tr>
+
+      <td><%= restaurant.name %></td>
+      <td><%= review.content %></td>
+      <td><%= review.reviewer.name %></td>
+      <td><%= review.updated_at.in_time_zone("Central Time (US & Canada)").strftime("%B %e, %Y, %H:%M:%S") %></td>
+      <% if session["user_id"].present? %>
+      <% if review.user_id == session["user_id"] %>
+      <td><%= link_to "Edit", "/reviews/#{review.id}/edit" %>
+        <td><%= link_to "Delete", "/reviews/#{review.id}", method: 'delete' %>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
+          <% end %>
+
+
+        </tr>
+
+        <% end %>
+      </tbody>
+    </table>
+
+    <% else %>
+    <p>No reviews you have written on this restaurant.</p>
+    <% end %>
 
 

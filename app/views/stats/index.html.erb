@@ -1,0 +1,53 @@
+<h3>Statistics of TinyTable</h3>
+<br>
+<p><strong>Total number of restaurants</strong>: <%= Restaurant.count %></p>
+<p><strong>Total number of users</strong>: <%= User.count %></p>
+<p><strong>Total number of reservations</strong>: <%= Reservation.count %></p>
+<p><strong>Total number of reviews</strong>: <%= Review.count %></p>
+
+<br>
+<p> Number of Administrator and Customer (pie chart, Customer:false, Administrator:true)</p>
+<%= pie_chart User.group(:admin).count %>
+
+
+<p> Number of Administrator and Customer (3D pie chart)</p>
+<% userData = Array.new %>
+<% userdist = User.group(:admin).count%>
+<% entry = [ "Customer", userdist[false]]%>
+<% userData.insert(-1, entry)%> 
+<% entry = [ "Administrator", userdist[true]] %>
+<% userData.insert(-1, entry)%> 
+
+<head>
+  <style media="screen">
+    body, html { overflow-x: visible; }
+  }
+</style>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'type');
+    data.addColumn('number', 'count');
+    <% userData.each do|type,count|%>
+    data.addRow(["<%= type %>" ,<%= count %> ])
+    <% end %>
+
+
+    var options = {
+      title: 'Administrator vs Customer',
+      backgroundColor: { fill:'transparent' },
+      is3D: true,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+    chart.draw(data, options);
+  }
+</script>
+</head>
+<body>
+  <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+</body>
+

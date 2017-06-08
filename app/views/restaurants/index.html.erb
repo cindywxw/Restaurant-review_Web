@@ -8,22 +8,22 @@
   <% end %>
 <% end %>
 
-<br></br>
+
+<!-- <br></br> -->
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Reviews</th>
         <% if session["user_id"].present? %>
           <% u = User.find_by(id: session["user_id"]) %>
           <% if u.admin == true %>
-            <th></th>
-            <th></th>
             <th>Number of Tables</th>
+            <th></th>
+            <th></th>
           <% end %>
         <% end %>
-
-        <th>Name</th>
-        <th>Address</th>
-        
       </tr>
     </thead>
     <tbody>
@@ -31,21 +31,31 @@
       <% @restaurants.each do |rest| %>
 
         <tr>
-            <% if session["user_id"].present? %>
-              <% u = User.find_by(id: session["user_id"]) %>
-              <% if u.admin == true %>
-                <td><%= link_to "Toast", "/restaurants/#{rest.id}", method: 'delete' %>
-                <td><%= link_to "Edit", "/restaurants/#{rest.id}/edit" %>
-                <td><%= rest.table_number %></td>
-              <% end %>
-            <% end %>
             <td>
               <%= link_to "#{rest.name}", "/restaurants/#{rest.id}" %>
             <td><%= rest.address %></td>
             <td><%= link_to "Reviews", "/reviews?restaurant_id=#{rest.id}" %>
+            <% if session["user_id"].present? %>
+              <% u = User.find_by(id: session["user_id"]) %>
+              <% if u.admin == true %>
+                <td><%= rest.table_number %></td>
+                <td><%= link_to "Edit", "/restaurants/#{rest.id}/edit" %>
+                <td><%= link_to "Delete", "/restaurants/#{rest.id}", method: 'delete' %>
+                
+                
+              <% end %>
+            <% end %>
 
         </tr>
 
       <% end %>
     </tbody>
   </table>
+
+  <% restcount = Restaurant.count/10 %>
+  <% if Restaurant.count%10 != 0 %>
+    <% restcount = restcount + 1 %>
+  <% end %>
+  <div class="col-md-12 text-center" >
+  <%= paginate @restaurants %>
+  </div>

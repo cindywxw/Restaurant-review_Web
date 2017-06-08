@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "restaurants", force: :cascade do |t|
-    t.text    "name"
+    t.string  "name"
     t.text    "address"
     t.integer "table_number"
   end
@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text    "name"
-    t.text    "email"
-    t.text    "password_digest"
+    t.string  "name"
+    t.string  "email"
+    t.string  "password_digest"
     t.boolean "admin",           default: false
     t.integer "points"
   end

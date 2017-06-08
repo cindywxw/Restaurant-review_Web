@@ -1,24 +1,7 @@
 Restaurant
-  name: text
+  name: string
   address: text  
   table_number: integer
-
-# Openhour
-#   restaurant_id: integer
-#   mon_open: text
-#   mon_close: text
-#   tues_open: text
-#   tues_close: text
-#   wed_open: text
-#   wed_close: text
-#   thr_open: text
-#   thr_close: text
-#   fri_open: text
-#   fri_close: text
-#   sat_open: text
-#   sat_close: text
-#   sun_open: text
-#   sun_close: text
 
 
 Table
@@ -26,17 +9,13 @@ Table
   table_order: integer
   capacity: integer
 
+
 User
-  name: text
-  email: text
-  password_digest: text
+  name: string
+  email: string
+  password_digest: string
   admin: boolean(false)
   points: integer
-
-
-# Administrator
-#   name: text
-#   password: text
 
 
 Reservation
