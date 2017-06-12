@@ -1,3 +1,15 @@
+Final Grade
+
+Score: (30/30)
+
+Well done!
+
+Notes:
+
+1. Any validation errors after form submission should be displayed on the same page of the form.
+
+-----
+
 Milestone #1 Grade - cindywxw
 
 Score: (10/10)
